@@ -1,0 +1,74 @@
+<%- include('partials/header') %>
+<section class="px-6 md:px-12 py-12 max-w-4xl mx-auto">
+  <div class="flex items-center justify-between mb-2 flex-wrap gap-2">
+    <h1 class="font-display text-3xl font-bold">Pickup Queue</h1>
+    <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 text-xs text-[#8a8a80]">
+        <span class="w-2 h-2 rounded-full bg-[#7A9E7E] live-dot"></span>
+        <span id="live-updated-label">Live · updated just now</span>
+      </div>
+      <a href="/admin" class="text-sm accent">← Back to Admin</a>
+    </div>
+  </div>
+  <p class="text-sm text-[#8a8a80] mb-8">Every pickup a real customer has booked. Confirm collection only after you've physically received the items — that's what credits their wallet.</p>
+
+  <% if (pickups.length === 0) { %>
+    <div class="bg-white rounded-2xl p-8 text-center text-sm text-[#8a8a80]">No pending pickups right now.</div>
+  <% } %>
+
+  <div id="pickup-queue-list" data-baseline-id="<%= latestPickupId %>" class="space-y-4">
+    <% pickups.forEach(function(p) { %>
+      <div class="bg-white rounded-2xl p-5 shadow-sm">
+        <div class="flex flex-wrap items-start justify-between gap-3 mb-3">
+          <div>
+            <div class="font-semibold">Pickup #<%= p.pickup_id %> — <%= p.customer_name %></div>
+            <div class="text-xs text-[#8a8a80] mt-0.5">
+              📞 <a href="tel:<%= p.customer_phone %>" class="underline"><%= p.customer_phone || 'No phone on file' %></a>
+              · ✉️ <%= p.customer_email %>
+            </div>
+            <div class="text-xs text-[#8a8a80] mt-0.5">
+              📍 <%= p.line1 %>, <%= p.city %> <%= p.pincode %>
+            </div>
+            <div class="text-xs text-[#8a8a80] mt-0.5">🕒 <%= formatWallClock(p.scheduled_at) %> (India time)</div>
+          </div>
+          <form method="POST" action="/admin/pickups/<%= p.pickup_id %>/complete" onsubmit="return confirm('Confirm you have physically collected these items and want to credit the customer wallet now?');">
+            <button type="submit" class="px-4 py-2 rounded-full btn-primary text-sm font-medium whitespace-nowrap">Confirm Collected & Pay</button>
+          </form>
+        </div>
+
+        <div class="border-t border-[#eee] pt-3 space-y-2">
+          <% p.items.forEach(function(item) { %>
+            <div class="flex items-center gap-3 text-sm">
+              <% if (item.images && item.images.length > 0) { %>
+                <img src="<%= item.images[0] %>" alt="<%= item.category %>" class="w-12 h-12 object-cover rounded-lg border border-[#eee] flex-shrink-0">
+              <% } else { %>
+                <div class="w-12 h-12 rounded-lg bg-[#f2ede2] flex items-center justify-center text-xs text-[#b0a890] flex-shrink-0">No photo</div>
+              <% } %>
+              <div class="flex-1">
+                <span class="capitalize font-medium"><%= item.category %></span> · <%= item.material %> · Grade <%= item.condition_grade %> · <%= item.weight_kg %>kg
+                <% if (item.description) { %>
+                  <div class="text-xs text-[#8a8a80] italic mt-0.5">"<%= item.description %>"</div>
+                <% } %>
+              </div>
+              <div class="font-semibold">₹<%= formatINR(item.price) %></div>
+            </div>
+          <% }) %>
+        </div>
+      </div>
+    <% }) %>
+  </div>
+
+  <% if (completed.length > 0) { %>
+    <h2 class="font-semibold mt-12 mb-4">Recently Completed</h2>
+    <div class="space-y-2">
+      <% completed.forEach(function(c) { %>
+        <div class="bg-[#f2ede2] rounded-xl p-3 text-sm flex justify-between">
+          <span>Pickup #<%= c.pickup_id %> — <%= c.customer_name %></span>
+          <span class="text-[#8a8a80]"><%= formatWallClock(c.scheduled_at) %></span>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+</section>
+<script src="/js/admin-live.js"></script>
+<%- include('partials/footer') %>

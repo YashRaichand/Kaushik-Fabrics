@@ -1,0 +1,55 @@
+<%- include('partials/header') %>
+<section class="px-6 md:px-12 py-16 md:py-24 max-w-5xl mx-auto text-center">
+  <h1 class="font-display text-4xl md:text-6xl font-bold leading-tight" style="color:#1B2B22;">
+    Turn your old clothes into <span class="accent">cash</span> and clean the planet.
+  </h1>
+  <p class="mt-6 text-lg text-[#4a4a42] max-w-2xl mx-auto">
+    We pick up your unused clothes, grade them, pay you instantly, and route the material to India's textile recyclers.
+  </p>
+  <div class="mt-8 flex justify-center gap-4 flex-wrap">
+    <a href="/sell" class="px-6 py-3 rounded-full btn-primary font-medium">Get an Instant Quote</a>
+    <a href="/signup" class="px-6 py-3 rounded-full border border-[#1B2B22] font-medium">Create Account</a>
+  </div>
+</section>
+
+<section class="px-6 md:px-12 py-12 max-w-4xl mx-auto">
+  <h2 class="font-display text-2xl font-bold text-center mb-2">The Impact of One Garment</h2>
+  <p class="text-center text-sm text-[#8a8a80] mb-10">Real, science-backed savings — every single time.</p>
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+    <div class="bg-white rounded-2xl p-8 shadow-sm text-center">
+      <div class="text-4xl mb-3">💧</div>
+      <div class="font-display text-3xl font-bold" style="color:#1B2B22;">~2,700L</div>
+      <div class="text-sm text-[#6b6b63] mt-1">Water saved per garment recycled instead of newly manufactured</div>
+    </div>
+    <div class="bg-white rounded-2xl p-8 shadow-sm text-center">
+      <div class="text-4xl mb-3">🌍</div>
+      <div class="font-display text-3xl font-bold" style="color:#1B2B22;">~3.6kg</div>
+      <div class="text-sm text-[#6b6b63] mt-1">CO₂ emissions avoided per garment recycled</div>
+    </div>
+  </div>
+  <p class="text-center text-sm text-[#8a8a80] mt-8">
+    ♻️ <%= impact.totalGarments %> garment<%= impact.totalGarments === 1 ? '' : 's' %> recycled on Fabrique so far — be part of the next one.
+  </p>
+</section>
+
+<section class="px-6 md:px-12 py-16 max-w-5xl mx-auto">
+  <h2 class="font-display text-2xl font-bold text-center mb-10">How Fabrique Works</h2>
+  <div class="grid md:grid-cols-3 gap-8">
+    <div class="text-center">
+      <div class="text-4xl mb-3">📝</div>
+      <h3 class="font-semibold mb-2">1. Describe or Fill a Form</h3>
+      <p class="text-sm text-[#6b6b63]">Type "I have 6 jeans and 3 shirts" or use the structured form — both work.</p>
+    </div>
+    <div class="text-center">
+      <div class="text-4xl mb-3">💰</div>
+      <h3 class="font-semibold mb-2">2. Get an Instant Price</h3>
+      <p class="text-sm text-[#6b6b63]">Our pricing engine weighs material, condition, brand, and demand instantly.</p>
+    </div>
+    <div class="text-center">
+      <div class="text-4xl mb-3">🚚</div>
+      <h3 class="font-semibold mb-2">3. Book Pickup, Get Paid</h3>
+      <p class="text-sm text-[#6b6b63]">We collect from your doorstep and credit your wallet the same day.</p>
+    </div>
+  </div>
+</section>
+<%- include('partials/footer') %>

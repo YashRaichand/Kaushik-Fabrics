@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fabrique — Circular Fashion, Instant Cash</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Inter', sans-serif; background:#F7F3EC; color:#1B1D18; }
+    .font-display { font-family: 'Fraunces', serif; }
+    .btn-primary { background:#1B2B22; color:#F7F3EC; transition: background .15s ease; }
+    .btn-primary:hover { background:#12130F; }
+    .accent { color:#B4694A; }
+    @keyframes liveFlash { 0% { background-color: #D8B26E44; } 100% { background-color: transparent; } }
+    .live-flash { animation: liveFlash 1s ease-out; border-radius: 6px; }
+    @keyframes livePulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.35; } }
+    .live-dot { animation: livePulse 1.6s ease-in-out infinite; }
+  </style>
+</head>
+<body class="min-h-screen">
+  <nav class="flex items-center justify-between px-6 md:px-12 py-5 bg-[#F7F3EC] border-b border-[#e5ddcd] sticky top-0 z-10">
+    <a href="/" class="font-display text-2xl font-bold flex items-center gap-2" style="color:#1B2B22;">Fabrique <span class="text-xl">♻️</span></a>
+    <div class="flex items-center gap-4 md:gap-6 text-sm font-medium">
+      <a href="/" class="hidden sm:inline hover:opacity-70">Home</a>
+      <a href="/sell" class="hidden sm:inline hover:opacity-70">Sell Clothes</a>
+      <% if (typeof currentUser !== 'undefined' && currentUser) { %>
+        <a href="/dashboard" class="hidden sm:inline hover:opacity-70">Dashboard</a>
+        <a href="/pickup" class="hidden sm:inline hover:opacity-70">Pickups</a>
+        <% if (currentUser.role === 'admin') { %>
+          <a href="/admin" class="hidden sm:inline hover:opacity-70">Admin</a>
+        <% } %>
+        <span class="hidden md:inline text-[#8a8a80]">Hi, <%= currentUser.name %></span>
+        <a href="/logout" class="px-4 py-2 rounded-full border border-[#1B2B22] font-medium">Logout</a>
+      <% } else { %>
+        <a href="/login" class="px-4 py-2 rounded-full btn-primary">Login</a>
+      <% } %>
+    </div>
+  </nav>
+  <main>

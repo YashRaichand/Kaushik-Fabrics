@@ -1,0 +1,50 @@
+<%- include('partials/header') %>
+<section class="px-6 md:px-12 py-16 max-w-md mx-auto">
+  <h1 class="font-display text-3xl font-bold mb-2 text-center">Create your account</h1>
+  <p class="text-center text-sm text-[#8a8a80] mb-6">Takes less than a minute.</p>
+
+  <% if (errors.general === 'suggest_login') { %>
+    <div class="bg-amber-50 border border-amber-200 text-amber-800 px-4 py-3 rounded-lg mb-4 text-sm flex items-center justify-between gap-3 flex-wrap">
+      <span>You already have an account with this email.</span>
+      <a href="/login?email=<%= encodeURIComponent(old.email) %>" class="font-semibold underline whitespace-nowrap">Log in →</a>
+    </div>
+  <% } else if (errors.general === 'server_error') { %>
+    <div class="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm">Something went wrong on our end. Please try again in a moment.</div>
+  <% } %>
+
+  <form method="POST" action="/signup" id="signup-form" class="space-y-4" novalidate>
+    <div>
+      <input type="text" name="name" value="<%= old.name %>" placeholder="Full name" autocomplete="name"
+        class="w-full px-4 py-3 rounded-lg border <%= errors.name ? 'border-red-400' : 'border-[#ddd4c2]' %> focus:outline-none focus:ring-2 focus:ring-[#1B2B22]/20">
+      <% if (errors.name) { %><p class="text-xs text-red-600 mt-1"><%= errors.name %></p><% } %>
+    </div>
+    <div>
+      <input type="email" name="email" value="<%= old.email %>" placeholder="Email" autocomplete="email"
+        class="w-full px-4 py-3 rounded-lg border <%= (errors.email && errors.general !== 'suggest_login') ? 'border-red-400' : 'border-[#ddd4c2]' %> focus:outline-none focus:ring-2 focus:ring-[#1B2B22]/20">
+      <% if (errors.email && errors.general !== 'suggest_login') { %><p class="text-xs text-red-600 mt-1"><%= errors.email %></p><% } %>
+    </div>
+    <div class="relative">
+      <input type="password" name="password" id="signup-password" placeholder="Password (min. 6 characters)" autocomplete="new-password"
+        class="w-full px-4 py-3 pr-16 rounded-lg border <%= errors.password ? 'border-red-400' : 'border-[#ddd4c2]' %> focus:outline-none focus:ring-2 focus:ring-[#1B2B22]/20">
+      <button type="button" data-toggle="signup-password" class="toggle-password absolute right-3 top-3 text-xs font-medium text-[#8a8a80]">Show</button>
+      <% if (errors.password) { %><p class="text-xs text-red-600 mt-1"><%= errors.password %></p><% } %>
+    </div>
+    <div class="relative">
+      <input type="password" name="confirm_password" id="signup-confirm" placeholder="Confirm password" autocomplete="new-password"
+        class="w-full px-4 py-3 pr-16 rounded-lg border <%= errors.confirm_password ? 'border-red-400' : 'border-[#ddd4c2]' %> focus:outline-none focus:ring-2 focus:ring-[#1B2B22]/20">
+      <button type="button" data-toggle="signup-confirm" class="toggle-password absolute right-3 top-3 text-xs font-medium text-[#8a8a80]">Show</button>
+      <% if (errors.confirm_password) { %><p class="text-xs text-red-600 mt-1"><%= errors.confirm_password %></p><% } %>
+    </div>
+    <div>
+      <input type="text" name="phone" value="<%= old.phone %>" placeholder="Phone number (optional)" autocomplete="tel"
+        class="w-full px-4 py-3 rounded-lg border <%= errors.phone ? 'border-red-400' : 'border-[#ddd4c2]' %> focus:outline-none focus:ring-2 focus:ring-[#1B2B22]/20">
+      <% if (errors.phone) { %><p class="text-xs text-red-600 mt-1"><%= errors.phone %></p><% } %>
+    </div>
+    <input type="text" name="city" value="<%= old.city %>" placeholder="City (optional)" autocomplete="address-level2"
+      class="w-full px-4 py-3 rounded-lg border border-[#ddd4c2] focus:outline-none focus:ring-2 focus:ring-[#1B2B22]/20">
+    <button type="submit" class="w-full py-3 rounded-full btn-primary font-medium">Sign Up</button>
+  </form>
+  <p class="text-sm text-center mt-4 text-[#6b6b63]">Already have an account? <a href="/login" class="accent font-medium">Log in</a></p>
+</section>
+<script src="/js/auth.js"></script>
+<%- include('partials/footer') %>

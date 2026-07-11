@@ -1,0 +1,63 @@
+<%- include('partials/header') %>
+<section class="px-6 md:px-12 py-12 max-w-5xl mx-auto">
+  <div class="flex items-center justify-between mb-1 flex-wrap gap-2">
+    <h1 class="font-display text-3xl font-bold">Admin Dashboard</h1>
+    <div class="flex items-center gap-2 text-xs text-[#8a8a80]">
+      <span class="w-2 h-2 rounded-full bg-[#7A9E7E] live-dot"></span>
+      <span id="live-updated-label">Live · updated just now</span>
+    </div>
+  </div>
+  <p class="text-sm text-[#8a8a80] mb-8">Numbers below update automatically - no need to refresh.</p>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+    <div class="bg-white rounded-2xl p-5 shadow-sm">
+      <div class="text-xs text-[#8a8a80] mb-1">Total Users</div>
+      <div id="kpi-users" data-value="<%= usersCount %>" class="font-display text-2xl font-bold"><%= usersCount %></div>
+    </div>
+    <a href="/admin/garments" class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+      <div class="text-xs text-[#8a8a80] mb-1">Garments Listed</div>
+      <div id="kpi-garments" data-value="<%= garmentsCount %>" class="font-display text-2xl font-bold"><%= garmentsCount %></div>
+      <div class="text-xs accent mt-1 font-medium">View all →</div>
+    </a>
+    <div class="bg-white rounded-2xl p-5 shadow-sm">
+      <div class="text-xs text-[#8a8a80] mb-1">Revenue Paid Out</div>
+      <div id="kpi-revenue" data-value="<%= revenue %>" class="font-display text-2xl font-bold">₹<%= formatINR(revenue) %></div>
+    </div>
+    <a href="/admin/pickups" class="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow">
+      <div class="text-xs text-[#8a8a80] mb-1">Pending Pickups</div>
+      <div id="kpi-pending" data-value="<%= pendingPickups %>" class="font-display text-2xl font-bold"><%= pendingPickups %></div>
+      <div class="text-xs accent mt-1 font-medium">View queue →</div>
+    </a>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-8">
+    <div>
+      <h2 class="font-semibold mb-4">Material Breakdown</h2>
+      <div class="space-y-2">
+        <% materialBreakdown.forEach(function(m) { %>
+          <div class="bg-white rounded-xl p-4 shadow-sm flex justify-between text-sm">
+            <span class="capitalize"><%= m.material %></span>
+            <span><%= m.count %> items · <%= m.total_weight %>kg</span>
+          </div>
+        <% }) %>
+        <% if (materialBreakdown.length === 0) { %>
+          <p class="text-sm text-[#8a8a80]">No garments listed yet.</p>
+        <% } %>
+      </div>
+    </div>
+    <div>
+      <h2 class="font-semibold mb-4">Recent Users</h2>
+      <div class="space-y-2">
+        <% recentUsers.forEach(function(u) { %>
+          <div class="bg-white rounded-xl p-4 shadow-sm text-sm">
+            <div class="font-medium"><%= u.name %></div>
+            <div class="text-xs text-[#8a8a80]"><%= u.email %> · <%= u.city || 'Unknown city' %></div>
+            <div class="text-xs text-[#8a8a80] mt-0.5">Signed up <%= formatIST(u.created_at) %></div>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="/js/admin-live.js"></script>
+<%- include('partials/footer') %>

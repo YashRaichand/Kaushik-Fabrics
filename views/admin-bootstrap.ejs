@@ -1,0 +1,27 @@
+<%- include('partials/header') %>
+<section class="px-6 md:px-12 py-16 max-w-md mx-auto">
+  <h1 class="font-display text-2xl font-bold mb-2 text-center">Admin Bootstrap</h1>
+  <p class="text-center text-sm text-[#8a8a80] mb-6">Promote an existing account to admin. No database tools needed.</p>
+
+  <% if (error) { %>
+    <div class="bg-red-50 text-red-700 px-4 py-3 rounded-lg mb-4 text-sm"><%= error %></div>
+  <% } %>
+
+  <% if (success) { %>
+    <div class="bg-green-50 text-green-700 px-4 py-3 rounded-lg mb-4 text-sm">
+      ✅ <strong><%= success.name %></strong> (<%= success.email %>) is now an admin.
+      Log out and back in on that account to see the Admin link in the nav.
+    </div>
+  <% } %>
+
+  <% if (promptEmail) { %>
+    <form method="POST" action="/admin-bootstrap" class="space-y-4">
+      <input type="hidden" name="secret" value="<%= secret %>">
+      <input type="email" name="email" placeholder="Email of the account to promote" required
+        class="w-full px-4 py-3 rounded-lg border border-[#ddd4c2] focus:outline-none focus:ring-2 focus:ring-[#1B2B22]/20">
+      <button type="submit" class="w-full py-3 rounded-full btn-primary font-medium">Make Admin</button>
+    </form>
+    <p class="text-xs text-center mt-4 text-[#8a8a80]">The email must already have an account (sign up first if it doesn't).</p>
+  <% } %>
+</section>
+<%- include('partials/footer') %>
